@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+
+export HUSKY_URDF_EXTRAS=$(catkin_find ucf08_husky urdf/urdf_husky_description.urdf.xacro --first-only)

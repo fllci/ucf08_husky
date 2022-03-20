@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package>
+	<name>ucf08_husky</name>
+	<version>0.0.0</version>
+	<description>A repository for the UCF08 Husky. Equipped with dual VLP16, OCCAM 360, ZED2, dual Blackfly cameras, and Garmin GPS.</description>
+	<maintainer email="code@clearpathrobotics.com">Clearpath Team</maintainer>
+	<license>BSD</license>
+	<buildtool_depend>catkin</buildtool_depend>
+	<run_depend>husky_description</run_depend>
+	
+</package>

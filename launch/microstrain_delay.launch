@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- 
+Delays the launch of the Microstrain IMU so that it has time to complete its self-calibration routine
+-->
+
+<launch>
+    <node pkg="launch_delay" type="launch_delay"
+      args="15 ucf08_husky microstrain.launch"
+      name="microstrain_delay" output="screen">
+    </node>
+</launch>

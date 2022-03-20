@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- 
+Staggers the launch of the USB based cameras. Also allows individual cameras to be disabled
+using an enironment variable in /etc/ros/setup.bash
+-->
+
+<launch>
+  <arg name="disable_occam"              default="$(optenv DISABLE_OCCAM false)" />
+  <arg name="disable_zed"                default="$(optenv DISABLE_ZED false)" />
+  <arg name="disable_front_cam"          default="$(optenv DISABLE_FRONT_CAM false)" />
+  <arg name="disable_tower_cam"          default="$(optenv DISABLE_TOWER_CAM false)" />
+ 
+  <group unless="$(arg disable_occam)">
+    <node pkg="launch_delay" type="launch_delay"
+      args="1 ucf08_husky omni_60.launch"
+      name="occam_delay" output="screen">
+    </node>
+  </group>
+  
+  <group unless="$(arg disable_zed)">
+    <node pkg="launch_delay" type="launch_delay"
+      args="10 ucf08_husky zed_no_tf.launch"
+      name="zed_delay" output="screen">
+    </node>
+  </group>
+  
+  <group unless="$(arg disable_front_cam)">
+    <node pkg="launch_delay" type="launch_delay"
+      args="20 ucf08_husky front_camera.launch"
+      name="front_camera_delay" output="screen">
+    </node>
+  </group>
+  
+  <group unless="$(arg disable_tower_cam)">
+    <node pkg="launch_delay" type="launch_delay"
+      args="30 ucf08_husky tower_camera.launch"
+      name="tower_camera_delay" output="screen">
+    </node>
+  </group>
+  
+</launch>

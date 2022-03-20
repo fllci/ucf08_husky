@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- Include Locking Adjustable Extrusion Mount Bracket -->
+<xacro:include filename="$(find lockmount_description)/urdf/lockmount.urdf.xacro" />
+
+  <!-- Tall Sensor Tower Link -->
+  <link name="tall_tower">
+    <visual>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/tall_tower.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/tall_tower.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="tall_tower_joint" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="tall_tower"/>
+    <origin xyz="-0.04 0.0 0.0" rpy="0.0 0.0 -1.5708"/>
+  </joint>
+
+  <!-- Joint between the tall tower and the horizontally-mounted VLP16 -->
+  <link name="velodyne_horiz" >
+    <visual>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/vlp16.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/vlp16.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="horiz_vlp16_joint" type="fixed">
+    <parent link="tall_tower" />
+    <child link="velodyne_horiz" />
+    <origin xyz="0 0 0.345" rpy="0 0 1.5708"/>
+  </joint>
+
+  <!-- Joint between the tall tower and the vertically-mounted VLP16 -->
+  <link name="velodyne_vert" >
+    <visual>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/vlp16.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/vlp16.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="vert_vlp16_joint" type="fixed">
+    <parent link="tall_tower" />
+    <child link="velodyne_vert" />
+    <origin xyz="0 -0.115 0.235" rpy="1.5708 -1.5708 0"/>
+  </joint>
+
+  <!-- Short Sensor Tower Link -->
+  <link name="short_tower">
+    <visual>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/short_tower.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/short_tower.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="short_tower_joint" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="short_tower"/>
+    <origin xyz="0.11 0.0 0.0" rpy="0.0 0.0 1.5708"/>
+  </joint>
+
+  <!-- Joint between the short tower and OCCAM camera -->
+  <link name="occam" >
+    <visual>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/occam.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/occam.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="occam_joint" type="fixed">
+    <parent link="short_tower" />
+    <child link="occam" />
+    <origin xyz="0 0 0.16" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- Add a mesh to represent the Garmin GPS -->
+  <link name="garmin_tower">
+    <visual>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/gps_tower.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://ucf08_husky/meshes/gps_tower.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="garmin_tower_joint" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="garmin_tower"/>
+    <origin xyz="-0.31 -0.265 0.0" rpy="0.0 0.0 1.5708"/>
+  </joint>
+
+  <!-- Joint between the garmin tower and the garmin sensor -->
+  <link name="navsat" />
+
+  <joint name="garmin_joint" type="fixed">
+    <parent link="garmin_tower" />
+    <child link="navsat" />
+    <origin xyz="-0.01 0 0.065" rpy="0 0 0"/>
+  </joint>
+
+
+  <!-- Generate a rectagles to represent the extrusion mounts on the top plate -->
+  <link name="left_rail">
+     <visual>
+       <geometry>
+         <box size="0.3 0.02 0.02"/>
+       </geometry>
+       <material name="dark_grey"/>
+     </visual>
+   </link>
+
+   <joint name="left_rail_to_top_pate" type="fixed">
+     <parent link="top_plate_link"/>
+     <child link="left_rail"/>
+     <origin xyz="0.0 0.265 0.01" rpy="0 0 0" />
+   </joint>
+
+  <link name="right_rail">
+     <visual>
+       <geometry>
+         <box size="0.3 0.02 0.02"/>
+       </geometry>
+       <material name="dark_grey"/>
+     </visual>
+   </link>
+
+   <joint name="right_rail_to_top_pate" type="fixed">
+     <parent link="top_plate_link"/>
+     <child link="right_rail"/>
+     <origin xyz="0.0 -0.265 0.01" rpy="0 0 0" />
+   </joint>
+
+  <link name="front_rail">
+     <visual>
+       <geometry>
+         <box size="0.3 0.02 0.02"/>
+       </geometry>
+       <material name="dark_grey"/>
+     </visual>
+   </link>
+
+   <joint name="front_rail_to_top_pate" type="fixed">
+     <parent link="top_plate_link"/>
+     <child link="front_rail"/>
+     <origin xyz="0.3456 0.0 0.01" rpy="0 0 1.5708" />
+   </joint>
+
+   <link name="rear_rail">
+     <visual>
+       <geometry>
+         <box size="0.3 0.02 0.02"/>
+       </geometry>
+       <material name="dark_grey"/>
+     </visual>
+   </link>
+
+   <joint name="rear_rail_to_top_pate" type="fixed">
+     <parent link="top_plate_link"/>
+     <child link="rear_rail"/>
+     <origin xyz="-0.32 0.0 0.01" rpy="0 0 1.5708" />
+   </joint>   
+
+
+  <!-- Lockmount and mounted cameras -->
+
+  <!-- Add Front Blackfly Locking Extrusion Bracket -->
+  <xacro:lockmount prefix="front_blackfly_lock" parent_link="front_rail" angle="0">
+    <origin xyz="0.134 0.0 0.01" rpy="0 0 1.5708" />
+  </xacro:lockmount>
+
+  <!-- Add Blackfly camera -->
+  <link name="front_blackfly">
+    <visual>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/camera_assy.dae"/>
+      </geometry>
+      <material name="dark_grey" />
+    </visual>
+    <collision>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/camera_assy.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint between front Blackfly lock mount and Blackfly camera -->
+  <joint name="front_blackfly_mount_joint" type="fixed">
+    <parent link="front_blackfly_lock_mount_link" />
+    <child link="front_blackfly" />
+    <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+  </joint>
+
+
+  <!-- Add tower Blackfly Locking Extrusion Bracket -->
+  <xacro:lockmount prefix="tower_blackfly_lock" parent_link="tall_tower" angle="0">
+    <origin xyz="-0.0705 0.01 0.222" rpy="0 1.5708 3.14159" />
+  </xacro:lockmount>
+
+  <!-- Add Blackfly camera -->
+  <link name="tower_blackfly">
+    <visual>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/camera_assy.dae"/>
+      </geometry>
+      <material name="dark_grey" />
+    </visual>
+    <collision>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/camera_assy.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint between tower Blackfly lock mount and Blackfly camera -->
+  <joint name="tower_blackfly_mount_joint" type="fixed">
+    <parent link="tower_blackfly_lock_mount_link" />
+    <child link="tower_blackfly" />
+    <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+  </joint>
+
+  <!-- Locking Hinge Link for the ZED2-->
+  <xacro:lockmount prefix="zed2_lock" parent_link="front_rail" angle="0">
+    <origin xyz="0.0 0.0 0.01" rpy="0 0 1.5708" />
+  </xacro:lockmount>
+
+  <!-- Add ZED2 camera -->
+  <link name="zed2_camera_center">
+    <visual>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/zed2.stl"/>
+      </geometry>
+      <material name="dark_grey" />
+    </visual>
+    <collision>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/zed2.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Zed2 Camera Joint -->
+  <joint name="zed2_camera_joint" type="fixed">
+    <parent link="zed2_lock_mount_link" />
+    <child link="zed2_camera_center" />
+    <origin xyz="0.0 0.0 0.018" rpy="0 0 3.14159" />
+  </joint>
+
+
+  <!-- Add FLIR Boson ADK Locking Extrusion Bracket -->
+  <xacro:lockmount prefix="flir_lock" parent_link="tall_tower" angle="0">
+    <origin xyz="0.0 0.03 0.206" rpy="0 0 -1.5708" />
+  </xacro:lockmount>
+
+  <!-- Add FLIR Boson ADK camera -->
+  <link name="boson_camera">
+    <visual>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/adk.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+	    <mesh filename="package://ucf08_husky/meshes/adk.dae"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint between lock mount and FLIR ADK camera -->
+  <joint name="flir_mount_joint" type="fixed">
+    <parent link="flir_lock_mount_link" />
+    <child link="boson_camera" />
+    <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+  </joint>   
+
+  <!-- Generate a rectagle to represent the wifi router -->
+  <link name="router">
+     <visual>
+       <geometry>
+         <box size="0.165 0.215 0.04"/>
+       </geometry>
+       <material name="dark_grey"/>
+     </visual>
+   </link>
+
+   <joint name="router_to_top_pate" type="fixed">
+     <parent link="top_plate_link"/>
+     <child link="router"/>
+     <origin xyz="-0.17 0.0 0.02" rpy="0 0 0" />
+   </joint>
+
+</robot>
